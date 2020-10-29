@@ -1,14 +1,21 @@
-import { StatusBar } from 'expo-status-bar';
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Button, StyleSheet, Text, View } from 'react-native';
+import { createAppContainer } from 'react-navigation';
+import { createStackNavigator } from 'react-navigation-stack';
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+class HomeScreen extends React.Component {
+  render() {
+    return (
+      <View style={styles.container}>
+        <Text>Open up App.js to start working on your app!</Text>
+        <Text>Hello World!!</Text>
+        <Button
+          title='Go to Details'
+          onPress={() => this.props.navigation.navigate('Details')}
+        />
+      </View>
+    )
+  }
 }
 
 const styles = StyleSheet.create({
@@ -19,3 +26,31 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
+
+class DetailsScreen extends React.Component {
+  render() {
+    return (
+      <View style={styles.container}>
+        <Text>Details Screen</Text>
+      </View>
+    );
+  }
+}
+
+const RootStack = createStackNavigator(
+  {
+    Home: HomeScreen,
+    Details: DetailsScreen
+  },
+  {
+    initi: 'Home'
+  }
+);
+
+const AppContainer = createAppContainer(RootStack);
+
+export default class App extends React.Component {
+  render() {
+    return <AppContainer />;
+  }
+}
